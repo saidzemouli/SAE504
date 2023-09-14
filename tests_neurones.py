@@ -39,6 +39,12 @@ class TestNeurone(unittest.TestCase):
         neurone = Neurone(7)
         neurone.setCoefficient(0.5,0)
         self.assertEqual(neurone.getCoefficient(0), 0.5)
+    
+    def test_getOutput(self):
+        neurone = Neurone(7)
+        list = [1,2,3,4,5,6,7]
+        neurone.getOutput(list)
+        self.assertEqual(neurone.getOutput(list), neurone.coefficients[0]*list[0]+neurone.coefficients[1]*list[1]+neurone.coefficients[2]*list[2]+neurone.coefficients[3]*list[3]+neurone.coefficients[4]*list[4]+neurone.coefficients[5]*list[5]+neurone.coefficients[6]*list[6])
 
 if __name__ == '__main__':
     unittest.main()

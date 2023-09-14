@@ -30,3 +30,12 @@ class Neurone:
             raise ValueError("L'index doit être compris entre 0 et le nombre d'entrées.")
         else:
             self.coefficients[index] = valeur
+
+    def getOutput(self,list):
+        output = 0
+        for i in range(self.nombre_entrees):
+            output += list[i]*self.coefficients[i]
+            print(list[i]," x ", self.coefficients[i], " = ", list[i]*self.coefficients[i])
+        print("output = ", output)
+        return output
+            
