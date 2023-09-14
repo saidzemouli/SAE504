@@ -35,5 +35,10 @@ class TestNeurone(unittest.TestCase):
         neurone = Neurone(7)
         self.assertEqual(neurone.getCoefficient(0), neurone.coefficients[0])
 
+    def test_setCoefficient(self): # Test de la méthode pour modifier le coefficient d'index i
+        neurone = Neurone(7)
+        neurone.setCoefficient(0.5,0)
+        self.assertEqual(neurone.getCoefficient(0), 0.5)
+
 if __name__ == '__main__':
     unittest.main()

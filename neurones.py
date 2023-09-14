@@ -22,3 +22,11 @@ class Neurone:
             raise ValueError("L'index doit être compris entre 0 et le nombre d'entrées.")
         else:
             return (self.coefficients[index])
+        
+    def setCoefficient(self,valeur,index):
+        if not isinstance(index, int):
+            raise ValueError("L'index doit être un nombre entier.")
+        if index < 0 or index > self.nombre_entrees:
+            raise ValueError("L'index doit être compris entre 0 et le nombre d'entrées.")
+        else:
+            self.coefficients[index] = valeur
