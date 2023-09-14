@@ -5,7 +5,8 @@ import unittest
 from neurones import *
 
 class TestNeurone(unittest.TestCase):
-    def test_return_float_coefficients(self):
+    def test_return_float_coefficients(self): # Vérifie que chaque coefficient est un nombre à virgule flottante (float)
+
         # Créez une instance de Neurone avec un nombre arbitraire d'entrées
         nombre_entrees = 7
         neurone = Neurone(nombre_entrees)
@@ -17,7 +18,7 @@ class TestNeurone(unittest.TestCase):
         for coefficient in coefficients:
             self.assertTrue(isinstance(coefficient, float))
 
-    def test_length_coefficients(self):
+    def test_length_coefficients(self): # Vérifie que la longueur de la liste coefficients est égale au nombre d'entrées
 
         nombre_entrees = 7
         neurone = Neurone(nombre_entrees)
@@ -25,7 +26,7 @@ class TestNeurone(unittest.TestCase):
         # Vérifie que la longueur de la liste coefficients est égale au nombre d'entrées
         self.assertEqual(len(coefficients), nombre_entrees+1)
 
-    def test_getNeuronSize(self):
+    def test_getNeuronSize(self): # Méthode pour obtenir le nombre d'entrées
         nombre_entrees = 7
         neurone = Neurone(nombre_entrees)
         self.assertEqual(neurone.getNeuronSize(), nombre_entrees)
