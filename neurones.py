@@ -1,8 +1,8 @@
 import random
 
 class Neurone:
-
-    def __init__(self, nombre_entrees):
+    
+    def setCoefficient(self, nombre_entrees):
         if not isinstance(nombre_entrees, int):
             raise ValueError("Le nombre d'entrées doit être un nombre entier.")
         elif nombre_entrees <= 0:
