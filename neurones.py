@@ -7,4 +7,4 @@ class Neurone:
             raise ValueError("Le nombre d'entrées doit être supérieur à zéro.") 
 
         # Création de la liste coefficients
-        self.coefficients = [random.uniform(-1, 1) for _ in range(nombre_entrees)] 
+        self.coefficients = [random.uniform(-1, 1) for _ in range(nombre_entrees+1)] 

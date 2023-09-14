@@ -23,7 +23,7 @@ class TestNeurone(unittest.TestCase):
         neurone = Neurone(nombre_entrees)
         coefficients = neurone.coefficients
         # Vérifie que la longueur de la liste coefficients est égale au nombre d'entrées
-        self.assertEqual(len(coefficients), nombre_entrees)
+        self.assertEqual(len(coefficients), nombre_entrees+1)
 
 if __name__ == '__main__':
     unittest.main()
