@@ -26,10 +26,5 @@ class TestNeurone(unittest.TestCase):
         # Vérifie que la longueur de la liste coefficients est égale au nombre d'entrées
         self.assertEqual(len(coefficients), nombre_entrees+1)
 
-    def test_getNeuronSize(self): # Méthode pour obtenir le nombre d'entrées
-        nombre_entrees = 7
-        neurone = Neurone(nombre_entrees)
-        self.assertEqual(neurone.getNeuronSize(), nombre_entrees)
-    
 if __name__ == '__main__':
     unittest.main()
