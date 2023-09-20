@@ -31,11 +31,19 @@ class Neurone:
         else:
             self.coefficients[index] = valeur
 
-    def getOutput(self,list):
+    def getOutput(self,liste):
         output = 0
-        for i in range(self.nombre_entrees):
-            output += list[i]*self.coefficients[i]
-            print(list[i]," x ", self.coefficients[i], " = ", list[i]*self.coefficients[i])
-        print("output = ", output)
-        return output
+        if not isinstance(liste, list):
+            raise ValueError("La liste doit être une liste.")
+        if len(liste) != self.nombre_entrees:
+            raise ValueError("La liste doit avoir le même nombre d'entrées que le neurone.")
+        if not all(isinstance(x, (float)) for x in liste):
+            raise ValueError("Les valeurs de la liste doivent être des nombres à virgule flottante (float).")
+        else :
+
+            for i in range(self.nombre_entrees):
+                output += liste[i]*self.coefficients[i]
+                print(liste[i]," x ", self.coefficients[i], " = ", liste[i]*self.coefficients[i])
+            print("output = ", output)
+            return output
             

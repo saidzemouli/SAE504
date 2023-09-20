@@ -42,7 +42,11 @@ class TestNeurone(unittest.TestCase):
     
     def test_getOutput(self):
         neurone = Neurone(7)
-        list = [1,2,3,4,5,6,7]
+        list = [1.1,2.2,3.3,4.4,5.5,6.6,7.7]
+
+        for n in range(len(neurone.coefficients)):
+            neurone.setCoefficient(0,n)
+
         neurone.getOutput(list)
         self.assertEqual(neurone.getOutput(list), neurone.coefficients[0]*list[0]+neurone.coefficients[1]*list[1]+neurone.coefficients[2]*list[2]+neurone.coefficients[3]*list[3]+neurone.coefficients[4]*list[4]+neurone.coefficients[5]*list[5]+neurone.coefficients[6]*list[6])
 
