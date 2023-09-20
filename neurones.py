@@ -44,4 +44,7 @@ class Neurone:
                 output += liste[i] * self.__coefficients[i]
                 print(liste[i], " x ", self.__coefficients[i], " = ", liste[i] * self.__coefficients[i])
             print("output = ", output)
+            output += self.__coefficients[self.__nombre_entrees]
+            print(self.__coefficients[self.__nombre_entrees])
+            print("output = ", output)
             return output
