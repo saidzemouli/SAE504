@@ -1,4 +1,5 @@
 import random
+import math
 
 class Neurone:
 
@@ -48,3 +49,11 @@ class Neurone:
             print(self.__coefficients[self.__nombre_entrees])
             print("output = ", output)
             return output
+
+def sigmoid(x):
+    if x > 100 :
+        return(1.0)
+    elif x < -100 :
+        return(0.0)
+    else :
+        return(1.0 / (1.0 + math.exp(-x)))

@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import unittest
-from neurones import Neurone
+from neurones import *
 import random
 
 class TestNeurone(unittest.TestCase):
@@ -63,20 +63,12 @@ class TestNeurone(unittest.TestCase):
 
         self.assertEqual(calculated_output, expected_output)
   
-    # def test_getOutputlist0(self):
-    #     neurone = Neurone(7)
-    #     input_list = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
-
-    #     for n in range(neurone.getNeuronSize() + 1):
-    #         neurone.setCoefficient(0, n)
+    def test_sigmoid(self): # Test de la fonction sigmoid
+        self.assertEqual(sigmoid(-150), 0)
+        self.assertEqual(sigmoid(150), 1.0)
+        self.assertEqual(sigmoid(0), 0.5)
+        self.assertLess(sigmoid(-10), 0.25)
+        self.assertGreater(sigmoid(10), 0.75)
         
-    #     for i in range(neurone.getNeuronSize() + 1):
-    #         neurone.setCoefficient(random.uniform(-1, 1), i)
-
-    #     calculated_output = neurone.getOutput(input_list)
-    #     expected_output = sum([neurone.getCoefficient(i) * input_list[i] for i in range(len(input_list))])
-
-    #     self.assertEqual(calculated_output, expected_output)
-
 if __name__ == '__main__':
     unittest.main()
