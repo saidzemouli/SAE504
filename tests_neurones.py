@@ -70,8 +70,29 @@ class TestNeurone(unittest.TestCase):
         self.assertLess(sigmoid(-10), 0.25)
         self.assertGreater(sigmoid(10), 0.75)
 
-    def test(self):
-        SigmoidNeuron(7)
-        
+    def test_calculeSortie_coeff0(self): # Test de la méthode calculeSortie pour obtenir la sortie du neurone pour coefficient = 0
+        neurone = SigmoidNeuron(7)
+        input_list = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
+
+        for n in range(neurone.getNeuronSize() + 1):
+            neurone.setCoefficient(0, n)
+        self.assertEqual(neurone.calculeSortie(input_list), 0.5)
+    
+    def test_calculeSortie_coeff_positif(self):
+        neurone = SigmoidNeuron(7)
+        input_list = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
+
+        for n in range(neurone.getNeuronSize() + 1):
+            neurone.setCoefficient(1, n)
+        self.assertGreater(neurone.calculeSortie(input_list), 0)
+   
+    def test_calculeSortie_coeff_negatif(self):
+        neurone = SigmoidNeuron(7)
+        input_list = [-1.1, -2.2, -3.3, -4.4, -5.5, -6.6, -7.7]
+
+        for n in range(neurone.getNeuronSize() + 1):
+            neurone.setCoefficient(-1, n)
+        self.assertGreater(neurone.calculeSortie(input_list), 0)
+
 if __name__ == '__main__':
     unittest.main()

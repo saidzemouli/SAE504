@@ -43,11 +43,11 @@ class Neurone:
         else:
             for i in range(self.__nombre_entrees):
                 output += liste[i] * self.__coefficients[i]
-                print(liste[i], " x ", self.__coefficients[i], " = ", liste[i] * self.__coefficients[i])
-            print("output = ", output)
+                #print(liste[i], " x ", self.__coefficients[i], " = ", liste[i] * self.__coefficients[i])
+            #print("output = ", output)
             output += self.__coefficients[self.__nombre_entrees]
-            print(self.__coefficients[self.__nombre_entrees])
-            print("output = ", output)
+            #print(self.__coefficients[self.__nombre_entrees])
+            #print("output = ", output)
             return output
 
 def sigmoid(x):
@@ -62,7 +62,6 @@ class SigmoidNeuron(Neurone):
     def __init__(self, nombre_entrees):
         super().__init__(nombre_entrees)
     
-    def getOutput(self, liste):
-        output = super().getOutput(liste)
-        return(sigmoid(output))
-        print("ta mère")
+    def calculeSortie(self, liste):
+        return sigmoid(super().getOutput(liste))
+    
