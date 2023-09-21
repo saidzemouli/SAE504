@@ -57,3 +57,12 @@ def sigmoid(x):
         return(0.0)
     else :
         return(1.0 / (1.0 + math.exp(-x)))
+    
+class SigmoidNeuron(Neurone):
+    def __init__(self, nombre_entrees):
+        super().__init__(nombre_entrees)
+    
+    def getOutput(self, liste):
+        output = super().getOutput(liste)
+        return(sigmoid(output))
+        print("ta mère")

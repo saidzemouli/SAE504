@@ -69,6 +69,9 @@ class TestNeurone(unittest.TestCase):
         self.assertEqual(sigmoid(0), 0.5)
         self.assertLess(sigmoid(-10), 0.25)
         self.assertGreater(sigmoid(10), 0.75)
+
+    def test(self):
+        SigmoidNeuron(7)
         
 if __name__ == '__main__':
     unittest.main()
