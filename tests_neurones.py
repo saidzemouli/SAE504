@@ -94,5 +94,6 @@ class TestNeurone(unittest.TestCase):
             neurone.setCoefficient(-1, n)
         self.assertGreater(neurone.calculeSortie(input_list), 0)
 
+
 if __name__ == '__main__':
     unittest.main()
