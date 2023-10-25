@@ -1,5 +1,6 @@
 import random
 import math
+import matplotlib.pyplot as plt
 
 class Neurone:
 
@@ -70,9 +71,42 @@ class Learning:
     def __init__(self, neurone, entrees, sortie):
         self.neurone = neurone
         self.entrees = entrees
-        self.sortie = sortie
+        self.sortie = [sortie]
 
     def calculerErreur(self, entree, sortie):
             prediction = self.neurone.calculeSortie(entree)
             erreur = (sortie - prediction) ** 2
-            return erreur    
+            return erreur
+
+    def calculerErreurMoyenne(self):
+        total_erreur = 0
+        for i in range(len(self.entrees)):
+            total_erreur += self.calculerErreur(self.entrees[i], self.sortie[i])
+        erreur_moyenne = total_erreur / len(self.entrees)
+        return erreur_moyenne
+    
+    def apprendreSimple(self, epochs=1000):
+        erreurs = []
+
+        for epoch in range(epochs):
+            erreur_actuelle = self.calculerErreurMoyenne()
+            erreurs.append(erreur_actuelle)
+
+            # Choisir un coefficient au hasard dans le neurone
+            coefficient_index = random.randint(0, self.neurone.getNeuronSize())
+            ancienne_valeur = self.neurone.getCoefficient(coefficient_index)
+
+            # Ajoutez une valeur aléatoire entre -0.1 et +0.1 au coefficient
+            delta = random.uniform(-0.1, 0.1)
+            self.neurone.setCoefficient(ancienne_valeur + delta, coefficient_index)
+
+            # Recalcule del'erreur moyenne
+            nouvelle_erreur = self.calculerErreurMoyenne()
+
+            # Si la nouvelle erreur est plus grande, remettre l'ancienne valeur du coefficient
+            if nouvelle_erreur > erreur_actuelle:
+                self.neurone.setCoefficient(ancienne_valeur, coefficient_index)
+
+        return erreurs
+    
+ 
