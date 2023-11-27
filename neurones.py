@@ -99,7 +99,7 @@ class Learning:
     
     def apprendreAvecMemoire(self, epochs=1000):
         erreurs = []  # Stocker l'évolution de l'erreur moyenne.
-        coefficients_initiaux = list(self.neurone.coefficients)
+        coefficients_utiles = []  # Stocker les coefficients utiles pour la baisse de l'erreur.
         modification = 0.1
         signe_modification = True
 
@@ -126,7 +126,9 @@ class Learning:
                 modification = random.uniform(0, 0.1)
                 signe_modification = random.choice([True, False])
             else:
+                # Ajouter le coefficient utile à la liste.
+                coefficients_utiles.append((random_coefficient_index, old_coefficient))
                 # Augmenter la valeur absolue de la modification de 10%.
                 modification *= 1.1
 
-        return erreurs
+        return erreurs, coefficients_utiles
