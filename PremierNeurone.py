@@ -29,8 +29,8 @@ erreurs_simple = learning.apprendreSimple(1000)
 erreurs_memoire, coefficients_utiles = learning.apprendreAvecMemoire(1000)
 
 # Affichage de l'évolution de l'erreur
-plt.plot(erreurs_simple, label="Apprendre Simple")
-plt.plot(erreurs_memoire, label="Apprendre Avec Mémoire", color="red")
+plt.plot(erreurs_simple, label="Apprendre Simple", color="red")
+plt.plot(erreurs_memoire, label="Apprendre Avec Mémoire", color="blue")
 plt.xlabel('Epochs')
 plt.ylabel('Erreur moyenne')
 plt.title("Évolution de l'erreur moyenne")
