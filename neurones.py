@@ -133,6 +133,24 @@ class Learning:
 
         return erreurs, coefficients_memoire
 
-class NeuralNetwork :
-    def __init__(self):
-        layers = []
+class NeuralNetwork:
+    def __init__(self, inputs_length, layers, layer_types):
+        if len(layers) != len(layer_types):
+            raise ValueError("Le nombre de couches et le nombre de types de couches doivent être identiques.")
+
+        self.layers = []
+        self.inputs_length = inputs_length
+
+        for i in range(len(layers)):
+            layer_size = layers[i]
+            layer_type = layer_types[i]
+
+            if layer_type == "LIN":
+                layer = [Neuron(self.inputs_length + 1) for _ in range(layer_size)]
+            elif layer_type == "SIG":
+                layer = [SigmoidNeuron(self.inputs_length + 1) for _ in range(layer_size)]
+            else:
+                raise ValueError("Type de couche non reconnu.")
+
+            self.layers.append(layer)
+            self.inputs_length = layer_size
