@@ -172,3 +172,10 @@ class NeuralNetwork:
             current_inputs = current_outputs
 
         return current_outputs
+    
+    def set_coefficient(self, layer, neuron, position, value):
+        if layer < 0 or layer >= len(self.layers):
+            raise ValueError("Couche invalide.")
+        if neuron < 0 or neuron >= len(self.layers[layer]):
+            raise ValueError("Neurone invalide.")
+        self.layers[layer][neuron].setCoefficient(position, value)
