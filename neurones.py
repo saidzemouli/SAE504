@@ -154,3 +154,10 @@ class NeuralNetwork:
 
             self.layers.append(layer)
             self.inputs_length = layer_size
+    
+    def get_coefficient(self, layer, neuron, position):
+        if layer < 0 or layer >= len(self.layers):
+            raise ValueError("Couche invalide.")
+        if neuron < 0 or neuron >= len(self.layers[layer]):
+            raise ValueError("Neurone invalide.")
+        return self.layers[layer][neuron].getCoefficient(position)
