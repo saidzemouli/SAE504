@@ -146,7 +146,7 @@ class NeuralNetwork:
             layer_type = layer_types[i]
 
             if layer_type == "LIN":
-                layer = [Neuron(self.inputs_length + 1) for _ in range(layer_size)]
+                layer = [Neurone(self.inputs_length + 1) for _ in range(layer_size)]
             elif layer_type == "SIG":
                 layer = [SigmoidNeuron(self.inputs_length + 1) for _ in range(layer_size)]
             else:
