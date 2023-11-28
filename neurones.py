@@ -132,3 +132,7 @@ class Learning:
                 modification *= 1.1
 
         return erreurs, coefficients_memoire
+
+class NeuralNetwork :
+    def __init__(self):
+        layers = []
