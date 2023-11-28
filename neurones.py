@@ -161,3 +161,14 @@ class NeuralNetwork:
         if neuron < 0 or neuron >= len(self.layers[layer]):
             raise ValueError("Neurone invalide.")
         return self.layers[layer][neuron].getCoefficient(position)
+    
+    def get_outputs(self, inputs):
+        if len(inputs) != self.inputs_length:
+            raise ValueError("Le nombre d'entrées ne correspond pas à la taille du réseau.")
+        
+        current_inputs = inputs
+        for layer in self.layers:
+            current_outputs = [neuron.getOutput(current_inputs) for neuron in layer]
+            current_inputs = current_outputs
+
+        return current_outputs
