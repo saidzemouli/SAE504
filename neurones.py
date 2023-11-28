@@ -99,36 +99,36 @@ class Learning:
     
     def apprendreAvecMemoire(self, epochs=1000):
         erreurs = []  # Stocker l'évolution de l'erreur moyenne.
-        coefficients_utiles = []  # Stocker les coefficients utiles pour la baisse de l'erreur.
-        modification = 0.1
-        signe_modification = True
+        coefficients_memoire = []  # Stocker les coefficients qui ont été utiles pour la baisse de l'erreur.
 
         for _ in range(epochs):
             erreur_actuelle = self.calculerErreurMoyenne()
             erreurs.append(erreur_actuelle)
+
             # Choisir un coefficient au hasard dans le neurone.
             random_coefficient_index = random.randint(0, len(self.neurone.coefficients) - 1)
             old_coefficient = self.neurone.coefficients[random_coefficient_index]
-            # Changer la valeur du coefficient avec le signe fixé par le booléen et la valeur de modification.
-            if signe_modification:
-                self.neurone.coefficients[random_coefficient_index] += modification
-            else:
-                self.neurone.coefficients[random_coefficient_index] -= modification
+
+            # Choisir une valeur entre 0 et 0.25 et un signe (True pour positif, False pour négatif).
+            random_value = random.uniform(0, 0.25) # J'ai modifié la valeur de 0.1 à 0.25 pour que l'erreur diminue plus rapidement.
+            random_sign = random.choice([True, False])
+            modification = random_value if random_sign else -random_value
+
             # Stocker la valeur du coefficient avant la modification.
-            new_coefficient = self.neurone.coefficients[random_coefficient_index]
+            coefficients_memoire.append(old_coefficient)
+
+            # Changer la valeur du coefficient selon la modification et le signe.
+            self.neurone.coefficients[random_coefficient_index] += modification
+
             # Recalculer l'erreur moyenne.
             nouvelle_erreur = self.calculerErreurMoyenne()
-            # Si la nouvelle erreur est plus élevée ou égale, remettre la valeur du coefficient à l'ancienne.
+
+            # Comparer les erreurs et ajuster la modification.
             if nouvelle_erreur >= erreur_actuelle:
+                # Si la nouvelle erreur est plus élevée ou égale, revenir à la valeur précédente.
                 self.neurone.coefficients[random_coefficient_index] = old_coefficient
-                # Choisir un nouveau coefficient, une nouvelle valeur et un nouveau signe.
-                random_coefficient_index = random.randint(0, len(self.neurone.coefficients) - 1)
-                modification = random.uniform(0, 0.1)
-                signe_modification = random.choice([True, False])
             else:
-                # Ajouter le coefficient utile à la liste.
-                coefficients_utiles.append((random_coefficient_index, old_coefficient))
-                # Augmenter la valeur absolue de la modification de 10%.
+                # Si la nouvelle erreur est plus faible, augmenter la valeur absolue de la modification.
                 modification *= 1.1
 
-        return erreurs, coefficients_utiles
+        return erreurs, coefficients_memoire
