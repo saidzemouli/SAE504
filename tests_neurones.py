@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# encoding: utf-8
-
 import unittest
 from neurones import *
 import random
@@ -33,7 +30,7 @@ class TestNeurone(unittest.TestCase):
     def test_Coefficient(self):
         # Test de la méthode pour modifier le coefficient d'index i
         neurone = Neurone(7)
-        neurone.setCoefficient(0.5, 0)
+        neurone.setCoefficient(0, 0.5)
         self.assertEqual(neurone.getCoefficient(0), 0.5)
     
     def test_getOutput_0(self): # Test de la méthode pour obtenir la sortie du neurone pour coefficient = 0
@@ -41,7 +38,7 @@ class TestNeurone(unittest.TestCase):
         input_list = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
 
         for n in range(neurone.getNeuronSize() + 1):
-            neurone.setCoefficient(0, n)
+            neurone.setCoefficient(n, 0)
     
         calculated_output = neurone.getOutput(input_list)
         expected_output = 0
@@ -52,16 +49,14 @@ class TestNeurone(unittest.TestCase):
         neurone = Neurone(7)
         input_list = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
 
-        for n in range(neurone.getNeuronSize() + 1):
-            neurone.setCoefficient(0, n)
-        
         for i in range(neurone.getNeuronSize() + 1):
-            neurone.setCoefficient(random.uniform(-1, 1), i)
-    
+            neurone.setCoefficient(i, random.uniform(-1, 1))
+        
         calculated_output = neurone.getOutput(input_list)
-        expected_output = sum([neurone.getCoefficient(i) * input_list[i] for i in range(len(input_list))]+[neurone.getCoefficient(neurone.getNeuronSize())])
+        expected_output = sum([neurone.getCoefficient(i) * input_list[i] for i in range(len(input_list))])
 
         self.assertEqual(calculated_output, expected_output)
+
   
     def test_sigmoid(self): # Test de la fonction sigmoid
         self.assertEqual(sigmoid(-150), 0)
@@ -75,25 +70,24 @@ class TestNeurone(unittest.TestCase):
         input_list = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
 
         for n in range(neurone.getNeuronSize() + 1):
-            neurone.setCoefficient(0, n)
-        self.assertEqual(neurone.calculeSortie(input_list), 0.5)
+            neurone.setCoefficient(n, 0)
+        self.assertEqual(neurone.calculerSortie(input_list), 0.5)
     
     def test_calculeSortie_coeff_positif(self):
         neurone = SigmoidNeuron(7)
         input_list = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
 
         for n in range(neurone.getNeuronSize() + 1):
-            neurone.setCoefficient(1, n)
-        self.assertGreater(neurone.calculeSortie(input_list), 0)
+            neurone.setCoefficient(n, 1)
+        self.assertGreater(neurone.calculerSortie(input_list), 0)
    
     def test_calculeSortie_coeff_negatif(self):
         neurone = SigmoidNeuron(7)
         input_list = [-1.1, -2.2, -3.3, -4.4, -5.5, -6.6, -7.7]
 
         for n in range(neurone.getNeuronSize() + 1):
-            neurone.setCoefficient(-1, n)
-        self.assertGreater(neurone.calculeSortie(input_list), 0)
-
+            neurone.setCoefficient(n, -1)
+        self.assertGreater(neurone.calculerSortie(input_list), 0)
 
 if __name__ == '__main__':
     unittest.main()
