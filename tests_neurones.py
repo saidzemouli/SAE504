@@ -89,5 +89,19 @@ class TestNeurone(unittest.TestCase):
             neurone.setCoefficient(n, -1)
         self.assertGreater(neurone.calculerSortie(input_list), 0)
 
+    def test_coherence_coefficients(self):
+        # Vérifie que tous les coefficients dans le réseau sont cohérents
+        inputs_length = 3
+        layers = [2, 3, 1]
+        layer_types = ["LIN", "LIN", "LIN"]
+
+        neural_network = NeuralNetwork(inputs_length, layers, layer_types)
+
+        for layer_idx, layer in enumerate(neural_network.layers):
+            for neuron_idx, neuron in enumerate(layer):
+                for coeff_idx in range(neuron.getNeuronSize() + 1):
+                    coefficient = neural_network.get_coefficient(layer_idx, neuron_idx, coeff_idx)
+                    self.assertIsInstance(coefficient, float)
+
 if __name__ == '__main__':
     unittest.main()
