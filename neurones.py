@@ -134,48 +134,31 @@ class Learning:
         return erreurs, coefficients_memoire
 
 class NeuralNetwork:
-    def __init__(self, inputs_length, layers, layer_types):
-        if len(layers) != len(layer_types):
-            raise ValueError("Le nombre de couches et le nombre de types de couches doivent être identiques.")
+    def __init__(self, num_inputs, layers, neuron_counts, neuron_types):
+        if len(layers) != len(neuron_counts) or len(layers) != len(neuron_types):
+            raise ValueError("Inconsistent parameters for layers, neuron_counts, and neuron_types.")
+
+        valid_neuron_types = ["Neurone", "SigmoidNeurone"]  # Updated neuron types
+        if not all(type_neurone in valid_neuron_types for type_neurone in neuron_types):
+            raise ValueError(f"Invalid neuron type. Must be one of {valid_neuron_types}.")
 
         self.layers = []
-        self.inputs_length = inputs_length
 
+        # Create layers with neurons
         for i in range(len(layers)):
-            layer_size = layers[i]
-            layer_type = layer_types[i]
+            layer = []
+            num_inputs_layer = num_inputs if i == 0 else neuron_counts[i - 1]
+            neuron_type = Neurone if neuron_types[i] == "Neurone" else SigmoidNeuron  # Updated neuron type
 
-            if layer_type == "LIN":
-                layer = [Neurone(self.inputs_length + 1) for _ in range(layer_size)]
-            elif layer_type == "SIG":
-                layer = [SigmoidNeuron(self.inputs_length + 1) for _ in range(layer_size)]
-            else:
-                raise ValueError("Type de couche non reconnu.")
+            for _ in range(neuron_counts[i]):
+                layer.append(neuron_type(num_inputs_layer))
 
             self.layers.append(layer)
-            self.inputs_length = layer_size
-    
-    def get_coefficient(self, layer, neuron, position):
-        if layer < 0 or layer >= len(self.layers):
-            raise ValueError("Couche invalide.")
-        if neuron < 0 or neuron >= len(self.layers[layer]):
-            raise ValueError("Neurone invalide.")
-        return self.layers[layer][neuron].getCoefficient(position)
-    
-    def get_outputs(self, inputs):
-        if len(inputs) != self.inputs_length:
-            raise ValueError("Le nombre d'entrées ne correspond pas à la taille du réseau.")
-        
-        current_inputs = inputs
-        for layer in self.layers:
-            current_outputs = [neuron.getOutput(current_inputs) for neuron in layer]
-            current_inputs = current_outputs
 
-        return current_outputs
-    
-    def set_coefficient(self, layer, neuron, position, value):
-        if layer < 0 or layer >= len(self.layers):
-            raise ValueError("Couche invalide.")
-        if neuron < 0 or neuron >= len(self.layers[layer]):
-            raise ValueError("Neurone invalide.")
-        self.layers[layer][neuron].setCoefficient(position, value)
+    def get_coefficient(self, layer, neuron, position):
+        if 0 <= layer < len(self.layers) and 0 <= neuron < len(self.layers[layer]):
+            return self.layers[layer][neuron].getCoefficient(position)
+        else:
+            raise ValueError("Couche ou position de neurone invalide.")
+
+        

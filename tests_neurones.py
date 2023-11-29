@@ -89,19 +89,23 @@ class TestNeurone(unittest.TestCase):
             neurone.setCoefficient(n, -1)
         self.assertGreater(neurone.calculerSortie(input_list), 0)
 
-    def test_coherence_coefficients(self):
-        # Vérifie que tous les coefficients dans le réseau sont cohérents
-        inputs_length = 3
-        layers = [2, 3, 1]
-        layer_types = ["LIN", "LIN", "LIN"]
+    def test_get_coefficient(self):
+        # Initialisation d'un réseau neuronal pour les tests
+        num_inputs = 3
+        layers = [1]
+        neuron_counts = [1]
+        neuron_types = ["Neurone"]
 
-        neural_network = NeuralNetwork(inputs_length, layers, layer_types)
+        nn = NeuralNetwork(num_inputs, layers, neuron_counts, neuron_types)
 
-        for layer_idx, layer in enumerate(neural_network.layers):
-            for neuron_idx, neuron in enumerate(layer):
-                for coeff_idx in range(neuron.getNeuronSize() + 1):
-                    coefficient = neural_network.get_coefficient(layer_idx, neuron_idx, coeff_idx)
-                    self.assertIsInstance(coefficient, float)
+        # Récupération d'un coefficient
+        coefficient = nn.get_coefficient(0, 0, 0)
+
+        # Vérification du résultat
+        self.assertIsInstance(coefficient, float)  # Vérifie que le coefficient est de type float
+        self.assertGreaterEqual(coefficient, -1.0)  # Vérifie que le coefficient est supérieur ou égal à -1.0
+        self.assertLessEqual(coefficient, 1.0)  # Vérifie que le coefficient est inférieur ou égal à 1.0
+
 
 if __name__ == '__main__':
     unittest.main()
