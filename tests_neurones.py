@@ -106,6 +106,15 @@ class TestNeurone(unittest.TestCase):
         self.assertGreaterEqual(coefficient, -1.0)  # Vérifie que le coefficient est supérieur ou égal à -1.0
         self.assertLessEqual(coefficient, 1.0)  # Vérifie que le coefficient est inférieur ou égal à 1.0
 
+    def test_set_coefficient(self):
+        num_inputs = 3
+        layers = [1]
+        neuron_counts = [1]
+        neuron_types = ["Neurone"]
+
+        nn = NeuralNetwork(num_inputs, layers, neuron_counts, neuron_types)
+        nn.set_coefficient(0, 0, 0, 0.5)
+        self.assertEqual(nn.get_coefficient(0, 0, 0), 0.5)
 
 if __name__ == '__main__':
     unittest.main()

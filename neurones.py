@@ -162,3 +162,10 @@ class NeuralNetwork:
             raise ValueError("Couche ou position de neurone invalide.")
 
         
+    def set_coefficient(self, layer, neuron, position, value):
+        if 0 <= layer < len(self.layers) and 0 <= neuron < len(self.layers[layer]):
+            self.layers[layer][neuron].setCoefficient(position, value)
+        else:
+            raise ValueError("Couche ou position de neurone invalide.")
+
+    
