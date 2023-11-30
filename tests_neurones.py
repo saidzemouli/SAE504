@@ -116,5 +116,53 @@ class TestNeurone(unittest.TestCase):
         nn.set_coefficient(0, 0, 0, 0.5)
         self.assertEqual(nn.get_coefficient(0, 0, 0), 0.5)
 
+    class TestNeuralNetwork(unittest.TestCase):
+        def test_get_outputs(self):
+            num_inputs = 3
+            layers = [2, 1]
+            neuron_counts = [3, 1]
+            neuron_types = ["Neurone", "Neurone"]
+
+            nn = NeuralNetwork(num_inputs, layers, neuron_counts, neuron_types)
+
+            # Définir les coefficients à des valeurs connues pour faciliter le test
+            nn.set_coefficient(0, 0, 0, 0.1)
+            nn.set_coefficient(0, 0, 1, 0.2)
+            nn.set_coefficient(0, 0, 2, 0.3)
+            nn.set_coefficient(0, 1, 0, -0.4)
+            nn.set_coefficient(0, 1, 1, -0.5)
+            nn.set_coefficient(0, 1, 2, -0.6)
+            nn.set_coefficient(0, 2, 0, 0.7)
+            nn.set_coefficient(0, 2, 1, 0.8)
+            nn.set_coefficient(0, 2, 2, 0.9)
+
+            nn.set_coefficient(1, 0, 0, 1.0)
+            nn.set_coefficient(1, 0, 1, -1.1)
+            nn.set_coefficient(1, 0, 2, 1.2)
+
+            # Entrées arbitraires
+            inputs = [0.5, -0.6, 0.7]
+
+            # Attendu : sortie de la première couche (avant activation)
+            expected_layer1_output = [0.1*0.5 + 0.2*(-0.6) + 0.3*0.7, -0.4*0.5 - 0.5*(-0.6) - 0.6*0.7, 0.7*0.5 + 0.8*(-0.6) + 0.9*0.7]
+
+            # Attendu : sortie finale (après activation)
+            expected_final_output = [sigmoid(1.0*expected_layer1_output[0] - 1.1*expected_layer1_output[1] + 1.2*expected_layer1_output[2])]
+
+            # Test
+            outputs = nn.get_outputs(inputs)
+
+            # Vérification des résultats
+            self.assertEqual(len(outputs), len(layers))
+            self.assertEqual(len(outputs[0]), neuron_counts[0])
+            self.assertEqual(len(outputs[-1]), neuron_counts[-1])
+
+            # Vérification de la sortie de la première couche
+            self.assertEqual(outputs[0], expected_layer1_output)
+
+            # Vérification de la sortie finale
+            self.assertAlmostEqual(outputs[-1][0], expected_final_output[0], places=5)
+
+
 if __name__ == '__main__':
     unittest.main()

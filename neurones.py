@@ -168,4 +168,18 @@ class NeuralNetwork:
         else:
             raise ValueError("Couche ou position de neurone invalide.")
 
-    
+    def get_outputs(self, inputs):
+        current_inputs = inputs
+        all_outputs = []
+
+        for layer in self.layers:
+            # Assurez-vous que la taille des entrées correspond à la taille du neurone dans cette couche.
+            if len(current_inputs) != layer[0].getNeuronSize():
+                raise ValueError("Le nombre d'entrées ne correspond pas à la taille du neurone dans cette couche.")
+
+            current_outputs = [neuron.getOutput(current_inputs) for neuron in layer]
+            all_outputs.append(current_outputs)
+            current_inputs = current_outputs
+
+        return all_outputs
+
