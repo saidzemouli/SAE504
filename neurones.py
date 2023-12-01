@@ -64,32 +64,32 @@ class Learning:
         self.sortie = sortie
 
     def calculerErreur(self, index):
-        # Calculer la sortie du neurone pour le jeu d'entrées 'entrees[index]'.
+        # Calcule la sortie du neurone pour le jeu d'entrées 'entrees[index]'.
         neurone_sortie = self.neurone.calculerSortie(self.entrees[index])
-        # Calculer l'erreur en carré.
+        # Calcule l'erreur en carré.
         erreur = (neurone_sortie - self.sortie[index]) ** 2
         return erreur
 
     def calculerErreurMoyenne(self):
-        # Calculer la moyenne des erreurs pour tous les éléments de 'entrees' et 'sortie'.
+        # Calcule la moyenne des erreurs pour tous les éléments de 'entrees' et 'sortie'.
         total_erreur = sum(self.calculerErreur(index) for index in range(len(self.entrees)))
         erreur_moyenne = total_erreur / len(self.entrees)
         return erreur_moyenne
 
     def apprendreSimple(self, epochs=1000):
-        erreurs = []  # Stocker l'évolution de l'erreur moyenne.
+        erreurs = []  # Stock l'évolution de l'erreur moyenne.
         for _ in range(epochs):
             erreur_actuelle = self.calculerErreurMoyenne()
             erreurs.append(erreur_actuelle)
-            # Choisir un coefficient au hasard dans le neurone.
+            # Choisi un coefficient au hasard dans le neurone.
             random_coefficient_index = random.randint(0, len(self.neurone.coefficients) - 1)
             old_coefficient = self.neurone.coefficients[random_coefficient_index]
             # Ajouter une valeur aléatoire entre -0.1 et +0.1.
             random_change = random.uniform(-0.1, 0.1)
             new_coefficient = old_coefficient + random_change
-            # Mettre à jour le coefficient dans le neurone.
+            # Mets à jour le coefficient dans le neurone.
             self.neurone.coefficients[random_coefficient_index] = new_coefficient
-            # Recalculer l'erreur moyenne.
+            # Recalcule l'erreur moyenne.
             nouvelle_erreur = self.calculerErreurMoyenne()
             # Si la nouvelle erreur est plus élevée, remettre l'ancienne valeur au coefficient.
             if nouvelle_erreur > erreur_actuelle:
@@ -144,36 +144,35 @@ class NeuralNetwork:
 
         self.layers = []
 
-        # Create layers with neurons
+        # Crée les couches et les neurones
         for i in range(len(layers)):
             layer = []
             num_inputs_layer = num_inputs if i == 0 else neuron_counts[i - 1]
-            neuron_type = Neurone if neuron_types[i] == "Neurone" else SigmoidNeuron  # Updated neuron type
+            neuron_type = Neurone if neuron_types[i] == "Neurone" else SigmoidNeuron  
 
             for _ in range(neuron_counts[i]):
                 layer.append(neuron_type(num_inputs_layer))
 
             self.layers.append(layer)
-
+    # Méthode pour obtenir la sortie du réseau neuronal
     def get_coefficient(self, layer, neuron, position):
         if 0 <= layer < len(self.layers) and 0 <= neuron < len(self.layers[layer]):
             return self.layers[layer][neuron].getCoefficient(position)
         else:
             raise ValueError("Couche ou position de neurone invalide.")
 
-        
+    # Méthode pour modifier un coefficient du réseau neuronal 
     def set_coefficient(self, layer, neuron, position, value):
         if 0 <= layer < len(self.layers) and 0 <= neuron < len(self.layers[layer]):
             self.layers[layer][neuron].setCoefficient(position, value)
         else:
             raise ValueError("Couche ou position de neurone invalide.")
-
+    # Méthode pour obtenir la sortie du réseau neuronal
     def get_outputs(self, inputs):
         current_inputs = inputs
         all_outputs = []
 
         for layer in self.layers:
-            # Assurez-vous que la taille des entrées correspond à la taille du neurone dans cette couche.
             if len(current_inputs) != layer[0].getNeuronSize():
                 raise ValueError("Le nombre d'entrées ne correspond pas à la taille du neurone dans cette couche.")
 
